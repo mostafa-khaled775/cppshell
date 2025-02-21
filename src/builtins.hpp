@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
+#include <optional>
 #include <memory>
 
 #include "command.hpp"
 
 namespace cmd {
-    std::vector<std::unique_ptr<cmd::Command>> builtins();
+    std::optional<std::unique_ptr<cmd::Command>> get_builtin(std::string name);
 };

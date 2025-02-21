@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 
 namespace cmd {
-    Executable::Executable(fs::directory_entry entry) : path(entry.path()) {}
+    Executable::Executable(fs::path entry) : path(entry) {}
     std::string Executable::get_name() { return path.filename(); }
     std::string Executable::get_desc() { return path; }
     int Executable::execute(std::vector<std::string> args, const Ctx &ctx) {

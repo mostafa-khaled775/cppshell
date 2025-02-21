@@ -1,14 +1,17 @@
 #pragma once
 
-#include <unordered_map>
-#include <string>
-#include <memory>
-
 class Ctx;
 
 #include "command.hpp"
 
+#include <cstdlib>
+#include <memory>
+#include <optional>
+#include <string>
+
 class Ctx {
-    public:
-    std::unordered_map<std::string, std::unique_ptr<cmd::Command>> commands;
+public:
+  Ctx();
+  std::optional<std::unique_ptr<cmd::Command>>
+  find_command(std::string name) const;
 };
