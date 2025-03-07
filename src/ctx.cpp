@@ -15,7 +15,9 @@ Ctx::Ctx() {}
 
 std::optional<std::unique_ptr<cmd::Command>>
 Ctx::find_command(std::string name) const {
-  if (name.contains('/')) {
+  if (name.empty()) {
+    return std::nullopt;
+  } else if (name.contains('/')) {
     return std::make_unique<cmd::Executable>(name);
   } else if (auto builtin = cmd::get_builtin(name); builtin.has_value()) {
     return std::move(builtin);
