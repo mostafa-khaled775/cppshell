@@ -2,7 +2,9 @@
 
 #include <cctype>
 
+#include <iostream>
 #include <optional>
+#include <ostream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -40,7 +42,7 @@ std::optional<Command> parse(std::string input) {
   Action fallbackAction(WriteCmd);
   parser::Command command{};
   int redirect_src(1);
-  auto flush_token = [&action, &fallbackAction, &command, &current_token, &redirect_src]() {
+  auto flush_token = [&action, &fallbackAction, &command, &current_token, redirect_src]() {
     switch (action) {
     case WriteCmd:
       command.name = std::move(current_token);
@@ -123,8 +125,10 @@ std::optional<Command> parse(std::string input) {
       } else if (c == '\\') {
         state = AfterBackslash;
       } else if (c == '>') {
+        std::cout << "current token: " << current_token << std::endl;
         try {
           redirect_src = std::stoi(current_token);
+          current_token = "";
         } catch (std::invalid_argument const &exc) {
           redirect_src = 1;
           flush_maybe();
